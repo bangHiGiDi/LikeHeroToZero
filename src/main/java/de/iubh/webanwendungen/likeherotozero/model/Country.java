@@ -1,11 +1,16 @@
 package de.iubh.webanwendungen.likeherotozero.model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Country")
-public class Country {
-    @Id
+public class Country implements Serializable {
+	
+    private static final long serialVersionUID = 1L;
+
+	@Id
     private int idCountry;
 
     private String name;

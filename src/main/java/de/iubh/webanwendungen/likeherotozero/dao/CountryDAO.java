@@ -4,9 +4,7 @@ import de.iubh.webanwendungen.likeherotozero.model.Country;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CountryDAO {
 
@@ -23,6 +21,10 @@ public class CountryDAO {
             map.put(c.getIdCountry(), c.getName());
         }
         return map;
+    }
+
+    public List<Map.Entry<Integer, String>> getAllCountriesAsMapEntries() {
+        return new ArrayList<>(getCountryNamesMap().entrySet());
     }
 
     public void close() {
