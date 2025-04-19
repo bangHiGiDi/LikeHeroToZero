@@ -17,14 +17,14 @@
 	    </div>
 	
 	    <div class="col-md-6 text-end">
-			<h:panelGroup rendered="#{loginBean.loggedIn}">
+			<h:panelGroup rendered="#{userBean.loggedIn}">
 			<h:link outcome="dashboard.xhtml" styleClass="btn btn-outline-primary me-2">Dashboard</h:link>
 			    <h:form styleClass="d-inline">
-			        <h:commandButton value="Logout" action="#{loginBean.logout}" styleClass="btn btn-outline-danger" />
+			        <h:commandButton value="Logout" action="#{userBean.logout}" styleClass="btn btn-outline-danger" />
 			    </h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{not loginBean.loggedIn}">
+			<h:panelGroup rendered="#{not userBean.loggedIn}">
 			    <h:link outcome="login.xhtml" styleClass="btn btn-outline-primary me-2">Login</h:link>
 			    <h:link outcome="register.xhtml" styleClass="btn btn-primary">Registrieren</h:link>
 			</h:panelGroup>

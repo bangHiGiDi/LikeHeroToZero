@@ -16,14 +16,14 @@
                 <h2 class="text-primary m-0">Like Hero to Zero</h2>
             </div>
             <div class="col-md-6 text-end">
-				<h:panelGroup rendered="#{loginBean.loggedIn}">
+				<h:panelGroup rendered="#{userBean.loggedIn}">
 				<h:link outcome="dashboard.xhtml" styleClass="btn btn-outline-primary me-2">Dashboard</h:link>
 				    <h:form styleClass="d-inline">
-				        <h:commandButton value="Logout" action="#{loginBean.logout}" styleClass="btn btn-outline-danger" />
+				        <h:commandButton value="Logout" action="#{userBean.logout}" styleClass="btn btn-outline-danger" />
 				    </h:form>
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{not loginBean.loggedIn}">
+				<h:panelGroup rendered="#{not userBean.loggedIn}">
 				    <h:link outcome="index.xhtml" styleClass="btn btn-outline-primary me-2">Startseite</h:link>
 				    <h:link outcome="login.xhtml" styleClass="btn btn-primary">Login</h:link>
 				</h:panelGroup>
@@ -37,38 +37,38 @@
 
             <div class="mb-3">
                 <label for="firstname" class="form-label">Vorname</label>
-                <h:inputText id="firstname" value="#{registerBean.firstname}" required="true" label="Vorname" styleClass="form-control" />
+                <h:inputText id="firstname" value="#{userBean.firstname}" required="true" label="Vorname" styleClass="form-control" />
             </div>
 
             <div class="mb-3">
                 <label for="lastname" class="form-label">Nachname</label>
-                <h:inputText id="lastname" value="#{registerBean.lastname}" required="true" label="Nachname" styleClass="form-control" />
+                <h:inputText id="lastname" value="#{userBean.lastname}" required="true" label="Nachname" styleClass="form-control" />
             </div>
 
             <div class="mb-3">
                 <label for="email" class="form-label">E-Mail-Adresse</label>
-                <h:inputText id="email" value="#{registerBean.email}" required="true" label="E-Mail-Adresse" styleClass="form-control" />
+                <h:inputText id="email" value="#{userBean.email}" required="true" label="E-Mail-Adresse" styleClass="form-control" />
             </div>
 
             <div class="mb-3">
                 <label for="password" class="form-label">Passwort</label>
-                <h:inputSecret id="password" value="#{registerBean.password}" required="true" label="Passwort" styleClass="form-control" />
+                <h:inputSecret id="password" value="#{userBean.password}" required="true" label="Passwort" styleClass="form-control" />
             </div>
 
             <div class="mb-3">
                 <label for="passwordConfirm" class="form-label">Passwort bestätigen</label>
-                <h:inputSecret id="passwordConfirm" value="#{registerBean.passwordConfirm}" required="true" label="Passwort bestätigen" styleClass="form-control" />
+                <h:inputSecret id="passwordConfirm" value="#{userBean.passwordConfirm}" required="true" label="Passwort bestätigen" styleClass="form-control" />
 
             </div>
 
             <div class="mb-4">
                 <label for="citizenship" class="form-label">Staatsbürgerschaft</label>
-                <h:selectOneMenu id="citizenship" value="#{registerBean.citizenshipId}" required="true" label="Staatsbürgerschaft" styleClass="form-select">
-                    <f:selectItems value="#{registerBean.countryOptions}" />
+                <h:selectOneMenu id="citizenship" value="#{userBean.citizenshipId}" required="true" label="Staatsbürgerschaft" styleClass="form-select">
+                    <f:selectItems value="#{userBean.countryOptions}" />
                 </h:selectOneMenu>
             </div>
 
-            <h:commandButton value="Registrieren" action="#{registerBean.register}" styleClass="btn btn-primary w-100" />
+            <h:commandButton value="Registrieren" action="#{userBean.register}" styleClass="btn btn-primary w-100" />
         </h:form>
     </div>
 </h:body>

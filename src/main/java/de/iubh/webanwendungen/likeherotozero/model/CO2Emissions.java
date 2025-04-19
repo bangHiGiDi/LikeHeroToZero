@@ -80,6 +80,10 @@ public class CO2Emissions implements Serializable {
 	public LocalDateTime getCo2EmissionYear() {
 		return co2EmissionYear;
 	}
+	
+	public String getYearOnly() {
+	    return String.valueOf(co2EmissionYear.getYear());
+	}
 
 	public void setCo2EmissionYear(LocalDateTime co2EmissionYear) {
 		this.co2EmissionYear = co2EmissionYear;

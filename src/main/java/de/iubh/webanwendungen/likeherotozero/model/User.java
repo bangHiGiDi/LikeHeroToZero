@@ -35,6 +35,9 @@ public class User implements Serializable {
     @Column(name = "CitizenshipID")
     private int citizenshipID;
     
+    @Column(name = "PermisionLevel", nullable = false)
+    private int permisionLevel;
+    
     // Getter & Setter
 
 	public int getIdUsers() {
@@ -100,5 +103,13 @@ public class User implements Serializable {
 	public void setCitizenshipID(int citizenshipID) {
 		this.citizenshipID = citizenshipID;
 	}
+	
+    public int getPermisionLevel() {
+        return permisionLevel;
+    }
+
+    public void setPermisionLevel(int permisionLevel) {
+        this.permisionLevel = permisionLevel;
+    }
     
 }

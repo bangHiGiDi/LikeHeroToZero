@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <f:metadata>
-    <f:event type="preRenderView" listener="#{loginBean.checkAccess}" />
+    <f:event type="preRenderView" listener="#{userBean.checkAccess}" />
 </f:metadata>
 <h:head>
     <title>Login</title>
@@ -21,14 +22,34 @@
             <div class="col-md-6 text-end">
 			<h:link outcome="index.xhtml" styleClass="btn btn-outline-primary me-2">Startseite</h:link>
 			    <h:form styleClass="d-inline">
-			        <h:commandButton value="Logout" action="#{loginBean.logout}" styleClass="btn btn-outline-danger" />
+			        <h:commandButton value="Logout" action="#{userBean.logout}" styleClass="btn btn-outline-danger" />
 			    </h:form>
             </div>
         </header>
             <h:messages globalOnly="true" layout="list" style="color:green; margin-bottom:1rem;" />
-			    <h:form styleClass="d-inline">
-			        <h:commandButton value="test" action="#{dashboardBean.test}" styleClass="btn btn-outline-danger" />
-			    </h:form>
+		    <h2 class="mb-4 text-center text-primary">
+		        CO₂-Emissionen von #{userBean.loggedInUserCountryName}
+		    </h2>
+		
+		    <!-- Emissions-Tabelle -->
+		    <h:panelGroup rendered="#{not empty dashboardBean.emissions}">
+		        <table class="table table-bordered table-hover table-striped">
+		            <thead class="table-light">
+		                <tr>
+		                    <th>Jahr</th>
+		                    <th>Gesamtemissionen (in t)</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <ui:repeat value="#{dashboardBean.emissions}" var="em">
+		                    <tr>
+		                        <td><h:outputText value="#{em.yearOnly}" /></td>
+		                        <td>#{em.totalEmissions}</td>
+		                    </tr>
+		                </ui:repeat>
+		            </tbody>
+		        </table>
+		    </h:panelGroup>
     </div>
 </h:body>
 </html>

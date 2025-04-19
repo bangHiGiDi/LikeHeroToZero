@@ -17,6 +17,15 @@ public class CO2EmissionsDAO {
     public List<CO2Emissions> findAll() {
         return em.createQuery("SELECT c FROM CO2Emissions c", CO2Emissions.class).getResultList();
     }
+    
+    public List<CO2Emissions> findByCountryId(int countryId) {
+        return em.createQuery(
+            "SELECT c FROM CO2Emissions c WHERE c.countryID = :countryId ORDER BY c.co2EmissionYear DESC",
+            CO2Emissions.class
+        )
+        .setParameter("countryId", countryId)
+        .getResultList();
+    }
 
     public void close() {
         if (em != null && em.isOpen()) {
