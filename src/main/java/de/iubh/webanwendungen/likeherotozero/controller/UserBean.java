@@ -22,7 +22,7 @@ public class UserBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // Gemeinsame Felder für Login & Registrierung
+    // Login & Registrierung
     private String firstname;
     private String lastname;
     private String email;
@@ -33,17 +33,19 @@ public class UserBean implements Serializable {
     private User loggedInUser;
     private Map<String, Integer> countryOptions = new LinkedHashMap<>();
 
-    private CountryDAO countryDAO;
     private UserDAO userDAO;
 
     @PostConstruct
     public void init() {
-        countryDAO = new CountryDAO();
         userDAO = new UserDAO();
 
-        Map<Integer, String> countries = countryDAO.getCountryNamesMap();
-        for (Map.Entry<Integer, String> entry : countries.entrySet()) {
-            countryOptions.put(entry.getValue(), entry.getKey());
+        try (CountryDAO dao = new CountryDAO()) {
+            Map<Integer, String> countries = dao.getCountryNamesMap();
+            for (Map.Entry<Integer, String> entry : countries.entrySet()) {
+                countryOptions.put(entry.getValue(), entry.getKey());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -57,8 +59,7 @@ public class UserBean implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Anmeldung erfolgreich!", null));
             return "dashboard.xhtml?faces-redirect=true";
         } else {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login fehlgeschlagen: Ungültige E-Mail oder Passwort.", null));
+            addError("Login fehlgeschlagen: Ungültige E-Mail oder Passwort.");
             return null;
         }
     }
@@ -125,20 +126,18 @@ public class UserBean implements Serializable {
         }
     }
 
-    // Zugriffsmethoden
-    
     public void checkAccess() {
         if (loggedInUser == null) {
             try {
                 FacesContext.getCurrentInstance()
-                    .getExternalContext()
-                    .redirect("login.xhtml");
+                        .getExternalContext()
+                        .redirect("login.xhtml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
     public boolean isLoggedIn() {
         return loggedInUser != null;
     }
@@ -161,19 +160,26 @@ public class UserBean implements Serializable {
 
     public String getLoggedInUserCountryName() {
         if (loggedInUser == null) return "Unbekanntes Land";
-        return countryDAO.getCountryNamesMap().getOrDefault(loggedInUser.getCitizenshipID(), "Unbekanntes Land");
+
+        try (CountryDAO dao = new CountryDAO()) {
+            return dao.getCountryNamesMap()
+                    .getOrDefault(loggedInUser.getCitizenshipID(), "Unbekanntes Land");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Fehler beim Abrufen";
+        }
     }
 
     // Getter und Setter
-    public String getFirstname() { 
+    public String getFirstname() {
     	return firstname; 
     }
     
-    public void setFirstname(String firstname) { 
+    public void setFirstname(String firstname) {
     	this.firstname = firstname; 
     }
 
-    public String getLastname() { 
+    public String getLastname() {
     	return lastname; 
     }
     
@@ -209,7 +215,7 @@ public class UserBean implements Serializable {
     	return citizenshipId; 
     }
     
-    public void setCitizenshipId(int citizenshipId) {
+    public void setCitizenshipId(int citizenshipId) { 
     	this.citizenshipId = citizenshipId; 
     }
 

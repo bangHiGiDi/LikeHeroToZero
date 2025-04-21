@@ -4,9 +4,12 @@ import de.iubh.webanwendungen.likeherotozero.model.Country;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
 
-public class CountryDAO {
+public class CountryDAO implements AutoCloseable {
 
     private EntityManager em;
 
@@ -27,9 +30,10 @@ public class CountryDAO {
         return new ArrayList<>(getCountryNamesMap().entrySet());
     }
 
+    @Override
     public void close() {
         if (em != null && em.isOpen()) {
             em.close();
         }
     }
-} 
+}

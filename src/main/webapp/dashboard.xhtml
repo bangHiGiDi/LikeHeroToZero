@@ -18,7 +18,7 @@
         <header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom">
             <div class="col-md-6 mb-2 mb-md-0">
                 <h2 class="text-primary m-0">Like Hero to Zero</h2>
-            </div>
+            </div> 
             <div class="col-md-6 text-end">
 			<h:link outcome="index.xhtml" styleClass="btn btn-outline-primary me-2">Startseite</h:link>
 			    <h:form styleClass="d-inline">
@@ -27,6 +27,59 @@
             </div>
         </header>
             <h:messages globalOnly="true" layout="list" style="color:green; margin-bottom:1rem;" />
+            
+             <h:panelGroup rendered="#{userBean.admin or userBean.scientist}">
+			    <h:form styleClass="mb-4">
+			        <div class="row g-3 align-items-center">
+			            <div class="col-md-2">
+			                <h:selectOneMenu value="#{dashboardBean.selectedCountryId}" styleClass="form-select">
+			                    <f:selectItems value="#{dashboardBean.countryOptions}" />
+			                </h:selectOneMenu>
+			            </div>
+			            <div class="col-md-1">
+						    <h:selectOneMenu value="#{dashboardBean.selectedYear}" styleClass="form-select">
+						        <f:selectItems value="#{dashboardBean.yearOptions}" />
+						    </h:selectOneMenu>
+						</div>
+			            <div class="col-md-3">
+			                <h:inputText value="#{dashboardBean.newEmissionValue}" styleClass="form-control"
+			                             placeholder="CO₂-Emission in Tonnen" />
+			            </div>
+			
+			            <div class="col-md-2">
+			                <h:commandButton value="Hinzufügen" action="#{dashboardBean.addEmission}"
+			                                 styleClass="btn btn-primary" />
+			            </div>
+			        </div>
+			    </h:form>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{userBean.scientist and not empty dashboardBean.unapprovedEmissions}">
+			    <h3 class="mt-5">Deine noch nicht freigegebenen Emissionen</h3>
+			
+			    <h:form>
+			        <h:dataTable value="#{dashboardBean.unapprovedEmissions}" var="e" styleClass="table table-striped mt-3">
+			            <h:column>
+			                <f:facet name="header">Jahr</f:facet>
+			                <h:outputText value="#{e.yearOnly}" />
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Emissionen</f:facet>
+			                <h:outputText value="#{e.totalEmissions}" />
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Land</f:facet>
+			                <h:outputText value="#{dashboardBean.getCountryNameById(e.countryID)}" />
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Aktion</f:facet>
+			                <h:commandButton value="Löschen"
+			                                 action="#{dashboardBean.deleteEmission(e.idCO2Emissions)}"
+			                                 styleClass="btn btn-sm btn-danger"
+			                                 onclick="return confirm('Bist du sicher, dass du diesen Eintrag löschen möchtest?');"/>
+			            </h:column>
+			        </h:dataTable>
+			    </h:form>
+			</h:panelGroup>		
 		    <h2 class="mb-4 text-center text-primary">
 		        CO₂-Emissionen von #{userBean.loggedInUserCountryName}
 		    </h2>

@@ -57,7 +57,7 @@ public class CO2EmissionsBean implements Serializable {
         Map<Integer, EmissionRow> tempMap = new TreeMap<>();
         Set<Integer> allYears = new TreeSet<>();
 
-        for (CO2Emissions e : emissionsDAO.findAll()) {
+        for (CO2Emissions e : emissionsDAO.findAllApproved()) {
             int year = e.getCo2EmissionYear().getYear();
             int countryId = e.getCountryID();
             allYears.add(year);

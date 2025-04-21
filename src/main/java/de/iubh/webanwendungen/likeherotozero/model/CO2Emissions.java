@@ -7,86 +7,86 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "CO2Emissions")
 public class CO2Emissions implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idCO2Emissions")
     private int idCO2Emissions;
 
+    @Column(name = "TotalEmissions", nullable = false)
     private double totalEmissions;
 
+    @Column(name = "CreatedByID", nullable = false)
     private int createdByID;
 
+    @Column(name = "CountryID", nullable = false)
     private int countryID;
 
-    @Column(name = "CreatedAt")
+    @Column(name = "CreatedAt", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "IsApproved")
+    @Column(name = "IsApproved", nullable = false)
     private boolean isApproved;
 
-    @Column(name = "CO2EmissionYear")
+    @Column(name = "CO2EmissionYear", nullable = false)
     private LocalDateTime co2EmissionYear;
-    
-    // Getters & Setters
-	public int getIdCO2Emissions() {
-		return idCO2Emissions;
-	}
 
-	public void setIdCO2Emissions(int idCO2Emissions) {
-		this.idCO2Emissions = idCO2Emissions;
-	}
+    // Getter and Setter
 
-	public double getTotalEmissions() {
-		return totalEmissions;
-	}
+    public int getIdCO2Emissions() {
+        return idCO2Emissions;
+    }
 
-	public void setTotalEmissions(double totalEmissions) {
-		this.totalEmissions = totalEmissions;
-	}
+    public void setIdCO2Emissions(int idCO2Emissions) {
+        this.idCO2Emissions = idCO2Emissions;
+    }
 
-	public int getCreatedByID() {
-		return createdByID;
-	}
+    public double getTotalEmissions() {
+        return totalEmissions;
+    }
 
-	public void setCreatedByID(int createdByID) {
-		this.createdByID = createdByID;
-	}
+    public void setTotalEmissions(double totalEmissions) {
+        this.totalEmissions = totalEmissions;
+    }
 
-	public int getCountryID() {
-		return countryID;
-	}
+    public int getCreatedByID() {
+        return createdByID;
+    }
 
-	public void setCountryID(int countryID) {
-		this.countryID = countryID;
-	}
+    public void setCreatedByID(int createdByID) {
+        this.createdByID = createdByID;
+    }
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+    public int getCountryID() {
+        return countryID;
+    }
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
+    public void setCountryID(int countryID) {
+        this.countryID = countryID;
+    }
 
-	public boolean isApproved() {
-		return isApproved;
-	}
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
-	public void setApproved(boolean isApproved) {
-		this.isApproved = isApproved;
-	}
+    public boolean isApproved() {
+        return isApproved;
+    }
 
-	public LocalDateTime getCo2EmissionYear() {
-		return co2EmissionYear;
-	}
-	
-	public String getYearOnly() {
-	    return String.valueOf(co2EmissionYear.getYear());
-	}
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
 
-	public void setCo2EmissionYear(LocalDateTime co2EmissionYear) {
-		this.co2EmissionYear = co2EmissionYear;
-	}
+    public LocalDateTime getCo2EmissionYear() {
+        return co2EmissionYear;
+    }
 
+    public void setCo2EmissionYear(LocalDateTime co2EmissionYear) {
+        this.co2EmissionYear = co2EmissionYear;
+    }
+
+    public String getYearOnly() {
+        return co2EmissionYear != null ? String.valueOf(co2EmissionYear.getYear()) : "";
+    }
 }
