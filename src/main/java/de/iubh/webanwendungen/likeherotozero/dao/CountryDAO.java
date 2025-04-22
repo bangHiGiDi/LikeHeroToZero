@@ -1,20 +1,17 @@
 package de.iubh.webanwendungen.likeherotozero.dao;
 
 import de.iubh.webanwendungen.likeherotozero.model.Country;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Persistence;
+import de.iubh.webanwendungen.likeherotozero.util.JPAUtil;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
+import jakarta.persistence.EntityManager;
+import java.util.*;
 
 public class CountryDAO implements AutoCloseable {
 
     private EntityManager em;
 
     public CountryDAO() {
-        em = Persistence.createEntityManagerFactory("mydbPU").createEntityManager();
+        em = JPAUtil.getEntityManager();
     }
 
     public Map<Integer, String> getCountryNamesMap() {

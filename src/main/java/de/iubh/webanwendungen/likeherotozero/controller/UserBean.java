@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -48,6 +49,15 @@ public class UserBean implements Serializable {
             e.printStackTrace();
         }
     }
+    
+    public String getUserNameById(int userId) {
+        UserDAO userDAO = new UserDAO();
+        User user = userDAO.findById(userId);
+        if (user != null) {
+            return user.getFirstname() + " " + user.getLastname();
+        }
+        return "Unbekannt";
+    }
 
     public String login() {
         User user = userDAO.findByEmail(email);
@@ -57,6 +67,10 @@ public class UserBean implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Anmeldung erfolgreich!", null));
+            
+            user.setLastLogin(LocalDateTime.now());
+            userDAO.update(user);
+            
             return "dashboard.xhtml?faces-redirect=true";
         } else {
             addError("Login fehlgeschlagen: Ungültige E-Mail oder Passwort.");

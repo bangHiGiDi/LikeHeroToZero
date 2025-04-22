@@ -97,6 +97,11 @@ public class DashboardBean implements Serializable {
         return unapprovedEmissions;
     }
     
+    public List<CO2Emissions> getAllUnapprovedEmissions() {
+        CO2EmissionsDAO dao = new CO2EmissionsDAO();
+        return dao.findAllUnapproved();
+    }
+    
     public String deleteEmission(int id) {
         CO2EmissionsDAO dao = new CO2EmissionsDAO();
         dao.deleteById(id);
@@ -104,6 +109,10 @@ public class DashboardBean implements Serializable {
             unapprovedEmissions = dao.findUnapprovedByUserId(userBean.getLoggedInUser().getIdUsers());
         }
         return null; 
+    }
+    
+    public void approveEmission(int id) {
+        new CO2EmissionsDAO().approveEmission(id);
     }
 
     public List<Integer> getYearOptions() {

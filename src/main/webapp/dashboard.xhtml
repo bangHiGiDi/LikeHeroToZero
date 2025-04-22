@@ -79,7 +79,48 @@
 			            </h:column>
 			        </h:dataTable>
 			    </h:form>
-			</h:panelGroup>		
+			</h:panelGroup>
+			<h:panelGroup rendered="#{userBean.admin}">
+			    <h3 class="mt-5">Alle nicht freigegebenen Emissionseinträge</h3>
+			
+			    <h:form>
+			        <h:dataTable value="#{dashboardBean.allUnapprovedEmissions}" var="e" styleClass="table table-striped mt-3">
+			            
+			            <h:column>
+			                <f:facet name="header">Jahr</f:facet>
+			                <h:outputText value="#{e.yearOnly}" />
+			            </h:column>
+			
+			            <h:column>
+			                <f:facet name="header">Emissionen</f:facet>
+			                <h:outputText value="#{e.totalEmissions}" />
+			            </h:column>
+			
+			            <h:column>
+			                <f:facet name="header">Land</f:facet>
+			                <h:outputText value="#{dashboardBean.getCountryNameById(e.countryID)}" />
+			            </h:column>
+			
+			            <h:column>
+			                <f:facet name="header">Erstellt von</f:facet>
+			                <h:outputText value="#{userBean.getUserNameById(e.createdByID)}" />
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Aktion</f:facet>
+			                <h:commandButton value="Freigeben"
+			                                 action="#{dashboardBean.approveEmission(e.idCO2Emissions)}"
+			                                 styleClass="btn btn-success btn-sm me-2"
+			                                 onclick="return confirm('Diesen Datensatz freigeben?');" />
+			                <h:commandButton value="Löschen"
+			                                 action="#{dashboardBean.deleteEmission(e.idCO2Emissions)}"
+			                                 styleClass="btn btn-danger btn-sm"
+			                                 onclick="return confirm('Diesen Datensatz wirklich löschen?');" />
+			            </h:column>
+			
+			        </h:dataTable>
+			    </h:form>
+			</h:panelGroup>
+					
 		    <h2 class="mb-4 text-center text-primary">
 		        CO₂-Emissionen von #{userBean.loggedInUserCountryName}
 		    </h2>
