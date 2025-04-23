@@ -28,7 +28,7 @@
         </header>
             <h:messages globalOnly="true" layout="list" style="color:green; margin-bottom:1rem;" />
             
-             <h:panelGroup rendered="#{userBean.admin or userBean.scientist}">
+             <h:panelGroup rendered="#{userBean.reviewer or userBean.scientist or userBean.admin}">
 			    <h:form styleClass="mb-4">
 			        <div class="row g-3 align-items-center">
 			            <div class="col-md-2">
@@ -80,7 +80,7 @@
 			        </h:dataTable>
 			    </h:form>
 			</h:panelGroup>
-			<h:panelGroup rendered="#{userBean.admin}">
+			<h:panelGroup rendered="#{userBean.reviewer or userBean.admin}">
 			    <h3 class="mt-5">Alle nicht freigegebenen Emissionseinträge</h3>
 			
 			    <h:form>

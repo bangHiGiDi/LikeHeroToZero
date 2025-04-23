@@ -168,10 +168,14 @@ public class UserBean implements Serializable {
         return loggedInUser != null && loggedInUser.getPermisionLevel() == 2;
     }
 
-    public boolean isReviewer() {
+    public boolean isVisitor() {
         return loggedInUser != null && loggedInUser.getPermisionLevel() == 3;
     }
 
+    public boolean isReviewer() {
+        return loggedInUser != null && loggedInUser.getPermisionLevel() == 4;
+    }
+    
     public String getLoggedInUserCountryName() {
         if (loggedInUser == null) return "Unbekanntes Land";
 

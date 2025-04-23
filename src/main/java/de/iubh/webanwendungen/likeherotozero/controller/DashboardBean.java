@@ -49,7 +49,7 @@ public class DashboardBean implements Serializable {
     }
 
     public String addEmission() {
-        if (!userBean.isAdmin() && !userBean.isScientist()) {
+        if (!userBean.isAdmin() && !userBean.isScientist() && !userBean.isReviewer()) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Keine Berechtigung zum Hinzufügen von Emissionen.", null));
             return null;
@@ -111,8 +111,21 @@ public class DashboardBean implements Serializable {
         return null; 
     }
     
-    public void approveEmission(int id) {
+    public String approveEmission(int id) {
+    	
+        if (!userBean.isAdmin() && !userBean.isReviewer()) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Keine Berechtigung zum Bestätigen von Emissionen.", null));
+            return null;
+        }
         new CO2EmissionsDAO().approveEmission(id);
+        
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        FacesContext.getCurrentInstance().addMessage(null,
+            new FacesMessage(FacesMessage.SEVERITY_INFO, "Emission bestätigt.", null));
+        return "dashboard.xhtml?faces-redirect=true";    	
+    	
+
     }
 
     public List<Integer> getYearOptions() {
