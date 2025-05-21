@@ -8,7 +8,10 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class CO2EmissionsDAO {
-
+	
+    /**
+     * Neuer Emissionseintrag in der Datenbank.
+     */
     public void save(CO2Emissions emission) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -24,7 +27,10 @@ public class CO2EmissionsDAO {
             em.close();
         }
     }
-
+    
+    /**
+     * Setzt das Feld isApproved eines Emissionseintrags auf true.
+     */
     public void approveEmission(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -38,7 +44,10 @@ public class CO2EmissionsDAO {
             em.close();
         }
     }
-
+    
+    /**
+     * Löscht eine Emission anhand seiner id.
+     */
     public void deleteById(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -52,7 +61,10 @@ public class CO2EmissionsDAO {
             em.close();
         }
     }
-
+    
+    /**
+     * Gibt alle genehmigten CO2-Einträge zurück, sortiert nach Jahr (absteigend).
+     */
     public List<CO2Emissions> findAllApproved() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -64,7 +76,9 @@ public class CO2EmissionsDAO {
             em.close();
         }
     }
-
+    /**
+     * Gibt alle genehmigten CO2-Einträge eines bestimmten Landes zurück.
+     */
     public List<CO2Emissions> findApprovedByCountryId(int countryId) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -77,7 +91,10 @@ public class CO2EmissionsDAO {
             em.close();
         }
     }
-
+    
+    /**
+     * Gibt alle User, noch nicht genehmigten Einträge zurück.
+     */
     public List<CO2Emissions> findUnapprovedByUserId(int userId) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -90,7 +107,10 @@ public class CO2EmissionsDAO {
             em.close();
         }
     }
-
+    
+    /**
+     * Gibt alle nicht genehmigten Emissionseinträge zurück.
+     */
     public List<CO2Emissions> findAllUnapproved() {
         EntityManager em = JPAUtil.getEntityManager();
         try {

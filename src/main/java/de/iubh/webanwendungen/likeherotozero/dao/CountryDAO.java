@@ -9,11 +9,17 @@ import java.util.*;
 public class CountryDAO implements AutoCloseable {
 
     private EntityManager em;
-
+    
+    /**
+     * Initialisiert EntityManager über hilfsklasse JPAUtil-Klasse.
+     */
     public CountryDAO() {
         em = JPAUtil.getEntityManager();
     }
-
+    
+    /**
+     * Gibt alle Länder in Form einer Map ID -> Name zurück.
+     */
     public Map<Integer, String> getCountryNamesMap() {
         List<Country> countries = em.createQuery("SELECT c FROM Country c", Country.class).getResultList();
         Map<Integer, String> map = new HashMap<>();
@@ -22,7 +28,10 @@ public class CountryDAO implements AutoCloseable {
         }
         return map;
     }
-
+    
+    /**
+     * Gibt alle Länder als Liste von Map.Objekten zurück.
+     */
     public List<Map.Entry<Integer, String>> getAllCountriesAsMapEntries() {
         return new ArrayList<>(getCountryNamesMap().entrySet());
     }

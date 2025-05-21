@@ -32,6 +32,11 @@ public class DashboardBean implements Serializable {
     private int selectedYear;
     private List<Integer> yearOptions;
 
+    
+    /**
+     * Initialisiert die Bean nach dem Laden.
+     * gibt Staatsangehörige genehmigte Emissionen wieder und erzeugt die Jahresauswahl
+     */
     @PostConstruct
     public void init() {
         if (userBean.getLoggedInUser() != null) {
@@ -47,7 +52,10 @@ public class DashboardBean implements Serializable {
             yearOptions.add(year);
         }
     }
-
+    
+    /**
+     * Fügt einen neuen CO2-Emissionswert hinzu (Status: nicht genehmigt)
+     */
     public String addEmission() {
         if (!userBean.isAdmin() && !userBean.isScientist() && !userBean.isReviewer()) {
             FacesContext.getCurrentInstance().addMessage(null,
@@ -74,11 +82,13 @@ public class DashboardBean implements Serializable {
 
         return "dashboard.xhtml?faces-redirect=true";
     }
-
+    
+    // getter für genhmigte Emissionen
     public List<CO2Emissions> getEmissions() {
         return emissions;
     }
 
+    //Erzeugt Dropdown mit Länder der DB
     public List<SelectItem> getCountryOptions() {
         List<SelectItem> items = new ArrayList<>();
         Map<Integer, String> countryMap = new CountryDAO().getCountryNamesMap();
@@ -88,6 +98,7 @@ public class DashboardBean implements Serializable {
         return items;
     }
 
+    //gibt nicht genehmigte Emissionen zurück vom ersteller
     public List<CO2Emissions> getUnapprovedEmissions() {
         if (userBean.getLoggedInUser() != null && unapprovedEmissions == null) {
             int userId = userBean.getLoggedInUser().getIdUsers();
@@ -97,11 +108,15 @@ public class DashboardBean implements Serializable {
         return unapprovedEmissions;
     }
     
+    //gibt nicht genehmigte Emissionen zurück(Admin/reviewer)
     public List<CO2Emissions> getAllUnapprovedEmissions() {
         CO2EmissionsDAO dao = new CO2EmissionsDAO();
         return dao.findAllUnapproved();
     }
     
+    /**
+     * Löscht einen Emissionsdaten anhand der id
+     */
     public String deleteEmission(int id) {
         CO2EmissionsDAO dao = new CO2EmissionsDAO();
         dao.deleteById(id);
@@ -111,6 +126,9 @@ public class DashboardBean implements Serializable {
         return null; 
     }
     
+    /**
+     * Genehmigt einen Emissionseintrag(Admin/reviewer)
+     */
     public String approveEmission(int id) {
     	
         if (!userBean.isAdmin() && !userBean.isReviewer()) {
@@ -152,6 +170,7 @@ public class DashboardBean implements Serializable {
         return selectedYear;
     }
     
+    //Gibt Ländername wieder anhand id
     public String getCountryNameById(int countryId) {
         return new CountryDAO().getCountryNamesMap().getOrDefault(countryId, "Unbekannt");
     }

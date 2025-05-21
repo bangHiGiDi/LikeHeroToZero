@@ -36,6 +36,9 @@ public class UserBean implements Serializable {
 
     private UserDAO userDAO;
 
+    /**
+     * Initialisiert die Bean und lädt Länderoptionen fürs Dropdown.
+     */
     @PostConstruct
     public void init() {
         userDAO = new UserDAO();
@@ -50,6 +53,9 @@ public class UserBean implements Serializable {
         }
     }
     
+    /**
+     * Gibt den Benutzernamen anhand seiner ID zurück.
+     */
     public String getUserNameById(int userId) {
         UserDAO userDAO = new UserDAO();
         User user = userDAO.findById(userId);
@@ -58,7 +64,11 @@ public class UserBean implements Serializable {
         }
         return "Unbekannt";
     }
-
+    
+    /**
+     * Login prozess.
+     * Prüft Benutzerexistenz, Passwort und updated LastLogin.
+     */
     public String login() {
         User user = userDAO.findByEmail(email);
 
@@ -78,6 +88,10 @@ public class UserBean implements Serializable {
         }
     }
 
+    /**
+     * Registrierung Prozess.
+     * Validierungen eingabedaten, Formatprüfung und Eindeutigkeit der E-Mail.
+     */
     public String register() {
         if (!password.equals(passwordConfirm)) {
             addError("Passwörter stimmen nicht überein.");
@@ -115,17 +129,26 @@ public class UserBean implements Serializable {
         return "login.xhtml?faces-redirect=true";
     }
 
+    /**
+     * logout weiter leitung startseite.
+     */
     public String logout() throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
         return null;
     }
-
+    
+    /**
+     * Fehlerrückmeldung.
+     */
     private void addError(String msg) {
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null));
     }
-
+    
+    /**
+     * Hashed Klartext-Passwort in SHA-256 um.
+     */
     private String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -139,7 +162,10 @@ public class UserBean implements Serializable {
             throw new RuntimeException("Fehler beim Hashen des Passworts", e);
         }
     }
-
+    
+    /**
+     * Check logged in; falls nicht, Loginseite.
+     */
     public void checkAccess() {
         if (loggedInUser == null) {
             try {
@@ -152,6 +178,7 @@ public class UserBean implements Serializable {
         }
     }
 
+    // Rollenprüfungen anhand der PermissionLevel
     public boolean isLoggedIn() {
         return loggedInUser != null;
     }

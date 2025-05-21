@@ -8,7 +8,10 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class UserDAO {
-
+	
+    /**
+     * Speichert einen neuen Benutzer.
+     */
     public void save(User user) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -24,7 +27,10 @@ public class UserDAO {
             em.close();
         }
     }
-
+    
+    /**
+     * update einen Benutzer.
+     */
     public void update(User user) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -35,7 +41,10 @@ public class UserDAO {
             em.close();
         }
     }
-
+    
+    /**
+     * Sucht user bei der id.
+     */
     public User findById(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -44,7 +53,10 @@ public class UserDAO {
             em.close();
         }
     }
-
+    
+    /**
+     * Prüft, ob eine email bereits existiert.
+     */
     public boolean existsByEmail(String email) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -57,6 +69,9 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Gibt alle User zurück.
+     */
     public List<User> findAll() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -67,6 +82,9 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Sucht einen User anhand seiner email.
+     */
     public User findByEmail(String email) {
         EntityManager em = JPAUtil.getEntityManager();
         try {

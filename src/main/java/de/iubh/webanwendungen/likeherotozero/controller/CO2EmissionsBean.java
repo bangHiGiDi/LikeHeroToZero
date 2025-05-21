@@ -71,14 +71,19 @@ public class CO2EmissionsBean implements Serializable {
         years = new ArrayList<>(allYears);
     }
 
+    /**
+     * sort Jahre neu -> alt
+     */ 
     private void extractYearsDescending() {
         Collections.reverse(years);
     }
 
+    //getter für die Liste der Jahre
     public List<Integer> getYears() {
         return years;
     }
 
+    //getter für aufbereitete Emissionsdaten
     public List<EmissionRow> getEmissionRows() {
         return emissionRows;
     }
